@@ -24,7 +24,8 @@ end
 
 run_bundle
 
-remove_file "public/index.html"
+remove_file 'public/index.html'
+remove_dir 'test'
 
 git :init
 git add: '.'
