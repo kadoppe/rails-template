@@ -29,11 +29,9 @@ remove_dir 'test'
 
 run 'bundle exec spring binstub --all'
 
+# rspec
+generate 'rspec:install'
+
 git :init
 git add: '.'
 git commit: "-m 'Initial commit'"
-
-# rspec
-generate 'rspec:install'
-git add: '.'
-git commit: "-m 'Install rspec'"
