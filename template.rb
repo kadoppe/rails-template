@@ -27,6 +27,8 @@ run_bundle
 remove_file 'public/index.html'
 remove_dir 'test'
 
+run 'bundle exec spring binstub --all'
+
 git :init
 git add: '.'
 git commit: "-m 'Initial commit'"
