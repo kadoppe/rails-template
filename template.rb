@@ -1,6 +1,10 @@
 repo_url = 'https://raw.github.com/kadoppe/rails-template/master'
 
 gem_group :default do
+  gem 'active-decorator'
+  gem 'bootstrap-sass'
+  gem 'bootswatch-rails'
+  gem 'font-awesome-rails'
   gem 'slim-rails'
 end
 
@@ -11,9 +15,11 @@ gem_group :development do
   gem 'bullet'
   gem 'guard'
   gem 'meta_request'
-  gem 'peek'
+  gem 'pry-byebug'
+  gem 'pry-coolline'
   gem 'pry-rails'
   gem 'quiet_assets'
+  gem 'rails-flog'
 end
 
 gem_group :development, :test do
@@ -30,7 +36,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-run_bundle
+run 'bundle install --path vendor/bundle --jobs=4'
 
 remove_file 'public/index.html'
 remove_dir 'test'
