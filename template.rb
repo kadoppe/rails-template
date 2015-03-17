@@ -9,26 +9,28 @@ gem_group :default do
 end
 
 gem_group :development do
-  gem 'awesome_print', require: 'ap'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
-  gem 'guard'
   gem 'meta_request'
+end
+
+gem_group :development, :test do
+  gem 'awesome_print', require: 'ap'
+  gem 'byebug'
+  gem 'factory_girl_rails'
+  gem 'guard'
+  gem 'hirb'
+  gem 'hirb-unicode'
   gem 'pry-byebug'
   gem 'pry-coolline'
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'rails-flog'
-end
-
-gem_group :development, :test do
-  gem 'byebug'
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
-  gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'spring'
   gem 'sqlite3'
+  gem 'web-console', '~> 2.0'
 end
 
 group :production do
