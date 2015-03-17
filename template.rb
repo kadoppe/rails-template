@@ -1,27 +1,33 @@
 repo_url = 'https://raw.github.com/kadoppe/rails-template/master'
 
 gem_group :default do
-  gem 'slim'
   gem 'slim-rails'
 end
 
 gem_group :development do
+  gem 'awesome_print', require: 'ap'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'hirb'
-  gem 'hirb-unicode'
-  gem 'pry'
-  gem 'pry-byebug'
-  gem 'pry-coolline'
+  gem 'bullet'
+  gem 'guard'
+  gem 'meta_request'
+  gem 'peek'
   gem 'pry-rails'
-  gem 'request_profiler'
-  gem 'simplecov'
+  gem 'quiet_assets'
 end
 
 gem_group :development, :test do
+  gem 'byebug'
+  gem 'web-console', '~> 2.0'
+  gem 'spring'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
-  gem 'spring'
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 run_bundle
