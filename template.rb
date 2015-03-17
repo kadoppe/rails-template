@@ -1,6 +1,6 @@
 # Gemfile
 gem_group :default do
-  gem 'active-decorator'
+  gem 'active_decorator'
   gem 'bootstrap-sass'
   gem 'bootswatch-rails'
   gem 'font-awesome-rails'
