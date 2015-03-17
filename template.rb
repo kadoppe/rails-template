@@ -71,6 +71,18 @@ application do
   }
 end
 
+# bullet
+insert_into_file 'config/environments/development.rb', %(
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+  end
+), after: 'config.assets.debug = true'
+
+
 remove_file 'public/index.html'
 remove_dir 'test'
 
