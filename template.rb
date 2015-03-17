@@ -1,7 +1,5 @@
-repo_url = 'https://raw.github.com/kadoppe/rails-template/master'
-
 # .gitignore
-run 'gibo OSX Ruby Rails > .gitignore' rescue nil
+run 'gibo OSX Ruby Rails > .gitignore'
 
 # Gemfile
 gem_group :default do
@@ -38,7 +36,12 @@ gem_group :development, :test do
   gem 'web-console', '~> 2.0'
 end
 
-group :production do
+gem_group :test do
+  gem 'webmock'
+  gem 'vcr'
+end
+
+gem_group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
@@ -96,17 +99,30 @@ remove_dir 'test'
 # rspec
 generate 'rspec:install'
 
-insert_into_file 'spec/spec_helper.rb',
-  "require 'factory_girl'\n",
-  after: "require 'rspec/autorun'\n"
-insert_into_file 'spec/spec_helper.rb',
-  "  config.include FactoryGirl::Syntax::Methods\n",
-  after: "RSpec.configure do |config|\n"
-insert_into_file 'spec/spec_helper.rb', <<-CONFIG, after: %(config.order = "random"\n)
-  config.before(:all) do
-    FactoryGirl.reload
+insert_into_file 'spec/spec_helper.rb', %(
+  config.before :suite do
+    DatabaseRewinder.clean_all
   end
-CONFIG
+
+  config.after :each do
+    DatabaseRewinder.clean
+  end
+
+  config.before :all do
+    FactoryGirl.reload
+    FactoryGirl.factories.clear
+    FactoryGirl.sequences.clear
+    FactoryGirl.find_definitions
+  end
+
+  config.include FactoryGirl::Syntax::Methods
+
+  VCR.configure do |c|
+    c.cassette_library_dir = 'spec/vcr'
+    c.hook_into :webmock
+    c.allow_http_connections_when_no_cassette = true
+  end
+), after: 'RSpec.configure do |config|'
 
 run 'bundle exec spring binstub --all'
 
