@@ -92,12 +92,9 @@ insert_into_file 'config/environments/development.rb', %(
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
-
-remove_file 'public/index.html'
-remove_dir 'test'
-
 # rspec
 generate 'rspec:install'
+run "echo '--color -f d' > .rspec"
 
 insert_into_file 'spec/spec_helper.rb', %(
   config.before :suite do
@@ -124,7 +121,8 @@ insert_into_file 'spec/spec_helper.rb', %(
   end
 ), after: 'RSpec.configure do |config|'
 
-run 'bundle exec spring binstub --all'
+insert_into_file 'spec/spec_helper.rb', "\nrequire 'factory_girl_rails'", after: "require 'rspec/rails'"
+gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 
 git :init
 git add: '.'
