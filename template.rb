@@ -32,7 +32,6 @@ gem_group :development, :test do
   gem 'rails-flog'
   gem 'rspec-rails'
   gem 'spring'
-  gem 'sqlite3'
   gem 'web-console', '~> 2.0'
 end
 
