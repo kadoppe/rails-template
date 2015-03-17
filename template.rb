@@ -1,3 +1,6 @@
+# .gitignore
+run 'gibo Rails > .gitignore' rescue nil
+
 # Gemfile
 gem_group :default do
   gem 'active_decorator'
