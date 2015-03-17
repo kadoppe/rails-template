@@ -1,6 +1,3 @@
-# .gitignore
-run 'gibo OSX Ruby Rails > .gitignore'
-
 # Gemfile
 gem_group :default do
   gem 'active-decorator'
