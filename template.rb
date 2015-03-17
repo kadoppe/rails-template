@@ -1,5 +1,8 @@
 repo_url = 'https://raw.github.com/kadoppe/rails-template/master'
 
+# .gitignore
+run 'gibo OSX Ruby Rails > .gitignore' rescue nil
+
 # Gemfile
 gem_group :default do
   gem 'active-decorator'
@@ -13,6 +16,7 @@ gem_group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
+  gem 'html2slim'
   gem 'meta_request'
 end
 
@@ -81,6 +85,9 @@ insert_into_file 'config/environments/development.rb', %(
     Bullet.rails_logger = true
   end
 ), after: 'config.assets.debug = true'
+
+# convert erb file to slim
+run 'bundle exec erb2slim -d app/views'
 
 
 remove_file 'public/index.html'
