@@ -36,6 +36,7 @@ gem_group :development, :test do
 end
 
 gem_group :test do
+  gem 'database_rewinder'
   gem 'webmock'
   gem 'vcr'
 end
