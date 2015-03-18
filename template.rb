@@ -123,6 +123,9 @@ insert_into_file 'spec/spec_helper.rb', %(
 insert_into_file 'spec/spec_helper.rb', "\nrequire 'factory_girl_rails'", after: "require 'rspec/rails'"
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 
+# remove files
+run "rm README.rdoc"
+
 git :init
 git add: '.'
 git commit: "-m 'Initial commit'"
