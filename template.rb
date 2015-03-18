@@ -97,6 +97,11 @@ generate 'rspec:install'
 run "echo '--color -f d' > .rspec"
 
 insert_into_file 'spec/spec_helper.rb', %(
+require 'factory_girl_rails'
+require 'vcr'
+), before: 'RSpec.configure do |config|'
+
+insert_into_file 'spec/spec_helper.rb', %(
   config.before :suite do
     DatabaseRewinder.clean_all
   end
@@ -121,7 +126,6 @@ insert_into_file 'spec/spec_helper.rb', %(
   end
 ), after: 'RSpec.configure do |config|'
 
-insert_into_file 'spec/spec_helper.rb', "\nrequire 'factory_girl_rails'", after: "require 'rspec/rails'"
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 
 # remove files
