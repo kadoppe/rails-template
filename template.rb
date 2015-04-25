@@ -50,13 +50,6 @@ end
 # install gems
 run 'bundle install --path vendor/bundle --jobs=4'
 
-# app/assets/javascripts/application.js
-create_file 'app/assets/javascripts/application.js', <<JS, force: true
-//= require jquery
-//= require bootstrap-sass-official
-//= require_tree .
-JS
-
 # config/application.rb
 application do
   %q{
@@ -135,6 +128,13 @@ insert_into_file 'spec/spec_helper.rb', %(
 ), after: 'RSpec.configure do |config|'
 
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
+
+# app/assets/javascripts/application.js
+create_file 'app/assets/javascripts/application.js', <<JS, force: true
+//= require jquery
+//= require bootstrap-sass-official
+//= require_tree .
+JS
 
 # remove files
 run "rm README.rdoc"
