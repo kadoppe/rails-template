@@ -2,13 +2,22 @@
 run 'gibo Rails > .gitignore' rescue nil
 
 # Gemfile
+create_file 'Gemfile', '', force: true
+add_source 'https://rubygems.org'
 add_source 'https://rails-assets.org'
 
 gem_group :default do
+  gem 'rails', '4.2.1'
+  gem 'sqlite3'
+  gem 'sass-rails', '~> 5.0'
+  gem 'uglifier', '>= 1.3.0'
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'jbuilder', '~> 2.0'
   gem 'active_decorator'
+  gem 'slim-rails'
+
   gem 'rails-assets-bootstrap-sass-official'
   gem 'rails-assets-fontawesome'
-  gem 'slim-rails'
 end
 
 gem_group :development do
@@ -45,6 +54,10 @@ end
 gem_group :production do
   gem 'pg'
   gem 'rails_12factor'
+end
+
+gem_group :doc do
+  gem 'sdoc', '~> 0.4.0'
 end
 
 # install gems
