@@ -6,7 +6,6 @@ add_source 'https://rails-assets.org'
 
 gem_group :default do
   gem 'active_decorator'
-  gem 'font-awesome-rails'
   gem 'rails-assets-bootstrap-sass-official'
   gem 'rails-assets-fontawesome'
   gem 'slim-rails'
