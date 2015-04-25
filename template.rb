@@ -136,6 +136,21 @@ create_file 'app/assets/javascripts/application.js', <<JS, force: true
 //= require_tree .
 JS
 
+# app/assets/stylesheets/application.css.scss
+remove_file 'app/assets/stylesheets/application.css'
+create_file 'app/assets/stylesheets/application.css.scss', <<CSS, force: true
+/*
+ *= require_tree .
+ *= require fontawesome
+ *= require_self
+ */
+
+$icon-font-path: "bootstrap-sass-official/";
+
+@import "bootstrap-sass-official/bootstrap-sprockets";
+@import "bootstrap-sass-official/bootstrap";
+CSS
+
 # create pages controller
 generate :controller, 'pages'
 create_file 'app/views/pages/index.html.slim', <<SLIM
