@@ -50,6 +50,13 @@ end
 # install gems
 run 'bundle install --path vendor/bundle --jobs=4'
 
+# app/assets/javascripts/application.js
+create_file 'app/assets/javascripts/application.js', <<JS, force: true
+//= require jquery
+//= require bootstrap-sass-official
+//= require_tree .
+JS
+
 # config/application.rb
 application do
   %q{
