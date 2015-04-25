@@ -136,6 +136,19 @@ create_file 'app/assets/javascripts/application.js', <<JS, force: true
 //= require_tree .
 JS
 
+# create pages controller
+generate :controller, 'pages'
+create_file 'app/views/pages/index.html.slim', <<SLIM
+p Under construction
+SLIM
+
+# routes.rb
+create_file 'config/routes.rb', <<RB, force: true
+Rails.application.routes.draw do
+  root 'pages#index'
+end
+RB
+
 # remove files
 run "rm README.rdoc"
 
