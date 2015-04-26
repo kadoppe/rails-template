@@ -196,11 +196,9 @@ p Under construction
 SLIM
 
 # routes.rb
-create_file 'config/routes.rb', <<RB, force: true
-Rails.application.routes.draw do
-  root 'pages#index'
-end
-RB
+gsub_file 'config/routes.rb', comment_line_pattern, ''
+gsub_file 'config/routes.rb', empty_line_pattern, ''
+route "root to: 'pages#index'"
 
 # Rakefile
 gsub_file 'Rakefile', comment_line_pattern, ''
