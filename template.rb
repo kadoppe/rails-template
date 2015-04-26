@@ -141,6 +141,9 @@ gsub_file 'config/initializers/session_store.rb', empty_line_pattern, ''
 gsub_file 'config/initializers/wrap_parameters.rb', comment_line_pattern, ''
 gsub_file 'config/initializers/wrap_parameters.rb', empty_line_pattern, ''
 
+# db/seeds.rb
+remove_file 'db/seeds.rb'
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
