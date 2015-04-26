@@ -201,6 +201,9 @@ Rails.application.routes.draw do
 end
 RB
 
+# Rakefile
+gsub_file 'Rakefile', /^\s*#.*\n/, ''
+
 # remove files
 run "rm README.rdoc"
 
