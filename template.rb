@@ -115,6 +115,9 @@ gsub_file 'config/environments/production.rb', comment_line_pattern, ''
 # config/initializers/assets.rb
 gsub_file 'config/initializers/assets.rb', comment_line_pattern, ''
 
+# config/initializers/backtrace_silencers.rb
+gsub_file 'config/initializers/backtrace_silencers.rb', comment_line_pattern, ''
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
