@@ -210,6 +210,9 @@ gsub_file 'Rakefile', empty_line_pattern, ''
 gsub_file 'config.ru', comment_line_pattern, ''
 gsub_file 'config.ru', empty_line_pattern, ''
 
+# config/environment.rb
+gsub_file 'config/environment.rb', comment_line_pattern, ''
+
 # remove files
 run "rm README.rdoc"
 
