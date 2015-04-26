@@ -189,6 +189,8 @@ RUBY
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
 
+gsub_file 'spec/rails_helper.rb', comment_line_pattern, ''
+
 # app/assets/javascripts/application.js
 create_file 'app/assets/javascripts/application.js', <<JS, force: true
 //= require jquery
