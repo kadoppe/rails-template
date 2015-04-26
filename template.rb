@@ -211,6 +211,10 @@ gsub_file 'config.ru', empty_line_pattern, ''
 # config/environment.rb
 gsub_file 'config/environment.rb', comment_line_pattern, ''
 
+# config/secrets.yml
+gsub_file 'config/secrets.yml', comment_line_pattern, ''
+gsub_file 'config/secrets.yml', empty_line_pattern, ''
+
 # remove files
 run "rm README.rdoc"
 
