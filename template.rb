@@ -124,6 +124,10 @@ gsub_file 'config/initializers/backtrace_silencers.rb', empty_line_pattern, ''
 gsub_file 'config/initializers/cookies_serializer.rb', comment_line_pattern, ''
 gsub_file 'config/initializers/cookies_serializer.rb', empty_line_pattern, ''
 
+# config/initializers/filter_parameter_logging.rb
+gsub_file 'config/initializers/filter_parameter_logging.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/filter_parameter_logging.rb', empty_line_pattern, ''
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
