@@ -162,7 +162,31 @@ $icon-font-path: "bootstrap-sass-official/";
 
 @import "bootstrap-sass-official/bootstrap-sprockets";
 @import "bootstrap-sass-official/bootstrap";
+
+body { padding-top: 70px; }
 CSS
+
+# create layout
+create_file 'app/views/layouts/application.html.slim', <<SLIM, force: true
+doctype html
+html
+  head
+    title
+      | #{app_name}
+    = stylesheet_link_tag    'application', media: 'all'
+    = csrf_meta_tags
+  body
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .container-header
+          a.navbar-brand
+            | #{app_name}
+
+    .container
+      = yield
+
+    = javascript_include_tag 'application'
+SLIM
 
 # create pages controller
 generate :controller, 'pages'
