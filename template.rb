@@ -64,7 +64,12 @@ gem_group :doc do
 end
 
 # install gems
-run 'bundle install --path vendor/bundle --jobs=4'
+# run 'bundle install --path vendor/bundle --jobs=4'
+
+# install locales
+remove_file 'config/locale'
+run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en.yml -nc -P config/locales/'
+run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -nc -P config/locales/'
 
 # config/application.rb
 gsub_file 'config/application.rb', comment_line_pattern, ''
@@ -94,6 +99,9 @@ application do
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   }
 end
+
+# config/database.yml
+gsub_file 'config/database.yml', comment_line_pattern, ''
 
 # bullet
 insert_into_file 'config/environments/development.rb', %(
