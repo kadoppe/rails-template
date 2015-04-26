@@ -2,7 +2,10 @@ empty_line_pattern = /^\s*\n/
 comment_line_pattern = /^\s*#.*\n/
 
 # .gitignore
-run 'gibo Rails > .gitignore' rescue nil
+run 'gibo OSX Ruby Rails JetBrains > .gitignore' rescue nil
+gsub_file '.gitignore', comment_line_pattern, ''
+gsub_file '.gitignore', /^config\/initializers\/secret_token.rb\n/, ''
+gsub_file '.gitignore', /^config\/secrets.yml\n/, ''
 
 # Gemfile
 create_file 'Gemfile', '', force: true
