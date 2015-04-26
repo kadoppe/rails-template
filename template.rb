@@ -109,6 +109,9 @@ RUBY
 # config/environments/test.rb
 gsub_file 'config/environments/test.rb', comment_line_pattern, ''
 
+# config/environments/test.rb
+gsub_file 'config/environments/production.rb', comment_line_pattern, ''
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
