@@ -67,6 +67,7 @@ end
 run 'bundle install --path vendor/bundle --jobs=4'
 
 # config/application.rb
+gsub_file 'config/application.rb', comment_line_pattern, ''
 application do
   %q{
     config.time_zone = 'Tokyo'
