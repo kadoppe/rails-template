@@ -1,3 +1,5 @@
+comment_line_pattern = /^\s*#.*\n/
+
 # .gitignore
 run 'gibo Rails > .gitignore' rescue nil
 
@@ -202,7 +204,10 @@ end
 RB
 
 # Rakefile
-gsub_file 'Rakefile', /^\s*#.*\n/, ''
+gsub_file 'Rakefile', comment_line_pattern, ''
+
+# config.ru
+gsub_file 'config.ru', comment_line_pattern, ''
 
 # remove files
 run "rm README.rdoc"
