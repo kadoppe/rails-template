@@ -33,6 +33,7 @@ gem_group :development, :test do
   gem 'awesome_print', require: 'ap'
   gem 'factory_girl_rails'
   gem 'guard'
+  gem 'guard-rspec'
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'pry-byebug'
@@ -190,6 +191,19 @@ gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
 
 gsub_file 'spec/rails_helper.rb', comment_line_pattern, ''
+
+# Guard
+create_file 'Guardfile', %q{
+guard :rspec, cmd: "bundle exec rspec" do
+  watch('spec/spec_helper.rb') { "spec" }
+  watch('app/controllers/application_controller.rb') { "spec/controllers" }
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^app/(.+)\.rb$}) { |m| "spec/#{m[1]}_spec.rb" }
+  watch(%r{^app/(.*)\.slim$}) { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
+  watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^app/controllers/(.+)_(controller)\.rb$}) { |m| ["spec/routing/#{m[1]}_routing_spec.rb", "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb", "spec/acceptance/#{m[1]}_spec.rb"] }
+end
+}
 
 # app/assets/javascripts/application.js
 create_file 'app/assets/javascripts/application.js', <<JS, force: true
