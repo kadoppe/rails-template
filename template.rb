@@ -8,20 +8,15 @@ gsub_file '.gitignore', /^config\/initializers\/secret_token.rb\n/, ''
 gsub_file '.gitignore', /^config\/secrets.yml\n/, ''
 
 # Gemfile
-create_file 'Gemfile', '', force: true
-add_source 'https://rubygems.org'
+gsub_file 'Gemfile', comment_line_pattern, ''
+gsub_file 'Gemfile', /gem 'turbolinks'\n/, ''
+gsub_file 'Gemfile', /gem 'jquery-rails'\n/, ''
+
 add_source 'https://rails-assets.org'
 
 gem_group :default do
-  gem 'rails', '4.2.1'
-  gem 'sqlite3'
-  gem 'sass-rails', '~> 5.0'
-  gem 'uglifier', '>= 1.3.0'
-  gem 'coffee-rails', '~> 4.1.0'
-  gem 'jbuilder', '~> 2.0'
   gem 'active_decorator'
   gem 'slim-rails'
-
   gem 'rails-assets-bootstrap-sass-official'
   gem 'rails-assets-fontawesome'
 end
@@ -36,7 +31,6 @@ end
 
 gem_group :development, :test do
   gem 'awesome_print', require: 'ap'
-  gem 'byebug'
   gem 'factory_girl_rails'
   gem 'guard'
   gem 'hirb'
@@ -47,8 +41,6 @@ gem_group :development, :test do
   gem 'quiet_assets'
   gem 'rails-flog'
   gem 'rspec-rails'
-  gem 'spring'
-  gem 'web-console', '~> 2.0'
 end
 
 gem_group :test do
@@ -60,10 +52,6 @@ end
 gem_group :production do
   gem 'pg'
   gem 'rails_12factor'
-end
-
-gem_group :doc do
-  gem 'sdoc', '~> 0.4.0'
 end
 
 # install gems
