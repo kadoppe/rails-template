@@ -1,3 +1,4 @@
+empty_line_pattern = /^\s*\n/
 comment_line_pattern = /^\s*#.*\n/
 
 # .gitignore
@@ -205,9 +206,11 @@ RB
 
 # Rakefile
 gsub_file 'Rakefile', comment_line_pattern, ''
+gsub_file 'Rakefile', empty_line_pattern, ''
 
 # config.ru
 gsub_file 'config.ru', comment_line_pattern, ''
+gsub_file 'config.ru', empty_line_pattern, ''
 
 # remove files
 run "rm README.rdoc"
