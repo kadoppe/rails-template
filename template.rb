@@ -133,6 +133,10 @@ remove_file 'config/initializers/inflections.rb'
 # config/initializers/mime_types.rb
 remove_file 'config/initializers/mime_types.rb'
 
+# config/initializers/cookies_serializer.rb
+gsub_file 'config/initializers/session_store.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/session_store.rb', empty_line_pattern, ''
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
