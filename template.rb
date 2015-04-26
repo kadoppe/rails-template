@@ -106,6 +106,9 @@ insert_into_file 'config/environments/development.rb', <<RUBY, after: 'config.as
   end
 RUBY
 
+# config/environments/test.rb
+gsub_file 'config/environments/test.rb', comment_line_pattern, ''
+
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
 
