@@ -39,7 +39,6 @@ gem_group :development, :test do
   gem 'pry-coolline'
   gem 'pry-rails'
   gem 'quiet_assets'
-  gem 'rails-flog'
   gem 'rspec-rails'
 end
 
