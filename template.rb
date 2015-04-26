@@ -57,9 +57,9 @@ end
 run 'bundle install --path vendor/bundle --jobs=4'
 
 # install locales
-remove_file 'config/locale'
-run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en.yml -nc -P config/locales/'
-run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -nc -P config/locales/'
+remove_file 'config/locales/en.yml'
+run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en.yml -P config/locales/'
+run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
 
 # config/application.rb
 gsub_file 'config/application.rb', comment_line_pattern, ''
