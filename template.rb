@@ -154,12 +154,14 @@ create_file '.rspec', <<EOF, force: true
 --color -f d
 EOF
 
-insert_into_file 'spec/spec_helper.rb', %(
+insert_into_file 'spec/spec_helper.rb', <<RUBY, before: 'RSpec.configure do |config|'
 require 'factory_girl_rails'
 require 'vcr'
-), before: 'RSpec.configure do |config|'
 
-insert_into_file 'spec/spec_helper.rb', %(
+RUBY
+
+insert_into_file 'spec/spec_helper.rb', <<RUBY, after: 'RSpec.configure do |config|'
+
   config.before :suite do
     DatabaseRewinder.clean_all
   end
@@ -182,9 +184,10 @@ insert_into_file 'spec/spec_helper.rb', %(
     c.hook_into :webmock
     c.allow_http_connections_when_no_cassette = true
   end
-), after: 'RSpec.configure do |config|'
+RUBY
 
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
+gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
 
 # app/assets/javascripts/application.js
 create_file 'app/assets/javascripts/application.js', <<JS, force: true
