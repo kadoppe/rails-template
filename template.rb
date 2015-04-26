@@ -205,6 +205,9 @@ guard :rspec, cmd: "bundle exec rspec" do
 end
 }
 
+# Spring
+run 'bundle exec spring binstub --all'
+
 # app/assets/javascripts/application.js
 create_file 'app/assets/javascripts/application.js', <<JS, force: true
 //= require jquery
