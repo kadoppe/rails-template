@@ -149,7 +149,10 @@ run 'bundle exec erb2slim -d app/views'
 
 # rspec
 generate 'rspec:install'
-run "echo '--color -f d' > .rspec"
+
+create_file '.rspec', <<EOF, force: true
+--color -f d
+EOF
 
 insert_into_file 'spec/spec_helper.rb', %(
 require 'factory_girl_rails'
