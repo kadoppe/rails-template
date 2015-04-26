@@ -64,7 +64,7 @@ gem_group :doc do
 end
 
 # install gems
-# run 'bundle install --path vendor/bundle --jobs=4'
+run 'bundle install --path vendor/bundle --jobs=4'
 
 # install locales
 remove_file 'config/locale'
