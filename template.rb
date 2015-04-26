@@ -117,8 +117,7 @@ gsub_file 'config/initializers/assets.rb', comment_line_pattern, ''
 gsub_file 'config/initializers/assets.rb', empty_line_pattern, ''
 
 # config/initializers/backtrace_silencers.rb
-gsub_file 'config/initializers/backtrace_silencers.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/backtrace_silencers.rb', empty_line_pattern, ''
+remove_file 'config/initializers/backtrace_silencers.rb'
 
 # config/initializers/cookies_serializer.rb
 gsub_file 'config/initializers/cookies_serializer.rb', comment_line_pattern, ''
@@ -127,6 +126,12 @@ gsub_file 'config/initializers/cookies_serializer.rb', empty_line_pattern, ''
 # config/initializers/filter_parameter_logging.rb
 gsub_file 'config/initializers/filter_parameter_logging.rb', comment_line_pattern, ''
 gsub_file 'config/initializers/filter_parameter_logging.rb', empty_line_pattern, ''
+
+# config/initializers/inflections.rb
+remove_file 'config/initializers/inflections.rb'
+
+# config/initializers/mime_types.rb
+remove_file 'config/initializers/mime_types.rb'
 
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
