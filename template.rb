@@ -93,8 +93,10 @@ end
 # config/database.yml
 gsub_file 'config/database.yml', comment_line_pattern, ''
 
-# bullet
-insert_into_file 'config/environments/development.rb', %(
+# config/environments/development.rb
+gsub_file 'config/environments/development.rb', comment_line_pattern, ''
+insert_into_file 'config/environments/development.rb', <<RUBY, after: 'config.assets.debug = true'
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
@@ -102,7 +104,7 @@ insert_into_file 'config/environments/development.rb', %(
     Bullet.console = true
     Bullet.rails_logger = true
   end
-), after: 'config.assets.debug = true'
+RUBY
 
 # convert erb file to slim
 run 'bundle exec erb2slim -d app/views'
