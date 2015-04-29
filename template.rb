@@ -41,6 +41,7 @@ gem_group :development, :test do
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
 end
 
 gem_group :test do
