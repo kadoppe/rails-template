@@ -143,8 +143,6 @@ insert_into_file 'spec/spec_helper.rb', <<RUBY, after: 'RSpec.configure do |conf
   end
 RUBY
 
-gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
-
 create_file 'spec/turnip_helper.rb', <<RUBY
 require 'rails_helper'
 require 'turnip/capybara'
