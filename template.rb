@@ -154,7 +154,7 @@ run 'bundle exec erb2slim -d app/views'
 generate 'rspec:install'
 
 create_file '.rspec', <<EOF, force: true
---color -f d -r turnip
+--color -f d -r turnip/rspec
 EOF
 
 insert_into_file 'spec/spec_helper.rb', <<RUBY, before: 'RSpec.configure do |config|'
