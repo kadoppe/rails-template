@@ -1,14 +1,9 @@
-empty_line_pattern = /^\s*\n/
-comment_line_pattern = /^\s*#.*\n/
-
 # .gitignore
 run 'gibo OSX Ruby Rails JetBrains > .gitignore' rescue nil
-gsub_file '.gitignore', comment_line_pattern, ''
 gsub_file '.gitignore', /^config\/initializers\/secret_token.rb\n/, ''
 gsub_file '.gitignore', /^config\/secrets.yml\n/, ''
 
 # Gemfile
-gsub_file 'Gemfile', comment_line_pattern, ''
 gsub_file 'Gemfile', /gem 'turbolinks'\n/, ''
 gsub_file 'Gemfile', /gem 'jquery-rails'\n/, ''
 
@@ -61,13 +56,15 @@ end
 # install gems
 run 'bundle install --path vendor/bundle --jobs=4'
 
+# convert erb file to slim
+run 'bundle exec erb2slim -d app/views'
+
 # install locales
 remove_file 'config/locales/en.yml'
 run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/en.yml -P config/locales/'
 run 'wget https://raw.github.com/svenfuchs/rails-i18n/master/rails/locale/ja.yml -P config/locales/'
 
 # config/application.rb
-gsub_file 'config/application.rb', comment_line_pattern, ''
 application do
   %q{
     config.time_zone = 'Tokyo'
@@ -95,11 +92,7 @@ application do
   }
 end
 
-# config/database.yml
-gsub_file 'config/database.yml', comment_line_pattern, ''
-
 # config/environments/development.rb
-gsub_file 'config/environments/development.rb', comment_line_pattern, ''
 insert_into_file 'config/environments/development.rb', <<RUBY, after: 'config.assets.debug = true'
 
   config.after_initialize do
@@ -111,48 +104,7 @@ insert_into_file 'config/environments/development.rb', <<RUBY, after: 'config.as
   end
 RUBY
 
-# config/environments/test.rb
-gsub_file 'config/environments/test.rb', comment_line_pattern, ''
-
-# config/environments/test.rb
-gsub_file 'config/environments/production.rb', comment_line_pattern, ''
-
-# config/initializers/assets.rb
-gsub_file 'config/initializers/assets.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/assets.rb', empty_line_pattern, ''
-
-# config/initializers/backtrace_silencers.rb
-remove_file 'config/initializers/backtrace_silencers.rb'
-
-# config/initializers/cookies_serializer.rb
-gsub_file 'config/initializers/cookies_serializer.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/cookies_serializer.rb', empty_line_pattern, ''
-
-# config/initializers/filter_parameter_logging.rb
-gsub_file 'config/initializers/filter_parameter_logging.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/filter_parameter_logging.rb', empty_line_pattern, ''
-
-# config/initializers/inflections.rb
-remove_file 'config/initializers/inflections.rb'
-
-# config/initializers/mime_types.rb
-remove_file 'config/initializers/mime_types.rb'
-
-# config/initializers/session_store.rb
-gsub_file 'config/initializers/session_store.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/session_store.rb', empty_line_pattern, ''
-
-# config/initializers/wrap_parameters.rb
-gsub_file 'config/initializers/wrap_parameters.rb', comment_line_pattern, ''
-gsub_file 'config/initializers/wrap_parameters.rb', empty_line_pattern, ''
-
-# db/seeds.rb
-remove_file 'db/seeds.rb'
-
-# convert erb file to slim
-run 'bundle exec erb2slim -d app/views'
-
-# rspec
+# setup rspec
 generate 'rspec:install'
 
 create_file '.rspec', <<EOF, force: true
@@ -192,9 +144,6 @@ insert_into_file 'spec/spec_helper.rb', <<RUBY, after: 'RSpec.configure do |conf
 RUBY
 
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
-gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
-
-gsub_file 'spec/rails_helper.rb', comment_line_pattern, ''
 
 create_file 'spec/turnip_helper.rb', <<RUBY
 require 'rails_helper'
@@ -203,7 +152,7 @@ require 'turnip/capybara'
 Dir.glob("spec/steps/**/*steps.rb") { |f| load f, true }
 RUBY
 
-# rubocop
+# set up rubocop
 create_file '.rubocop.yml', <<YAML
 AllCops:
   Exclude:
@@ -222,7 +171,7 @@ Style/Documentation:
   Enabled: false
 YAML
 
-# Guard
+# set up Guard
 create_file 'Guardfile', %q{
 group :red_green_refactor, halt_on_fail: true do
   guard :rspec, cmd: "bundle exec rspec" do
@@ -242,8 +191,14 @@ group :red_green_refactor, halt_on_fail: true do
 end
 }
 
-# Spring
+# set up spring
 run 'bundle exec spring binstub --all'
+
+# routing
+route "root to: 'pages#index'"
+
+# DB migration
+rake 'db:migrate'
 
 # app/assets/javascripts/application.js
 create_file 'app/assets/javascripts/application.js', <<JS, force: true
@@ -253,7 +208,6 @@ create_file 'app/assets/javascripts/application.js', <<JS, force: true
 JS
 
 # app/assets/stylesheets/application.css.scss
-remove_file 'app/assets/stylesheets/application.css'
 create_file 'app/assets/stylesheets/application.css.scss', <<CSS, force: true
 /*
  *= require_tree .
@@ -297,6 +251,7 @@ create_file 'app/views/pages/index.html.slim', <<SLIM
 p Under construction
 SLIM
 
+# unit test cases
 create_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, force: true
 require 'rails_helper'
 
@@ -316,6 +271,7 @@ RSpec.describe PagesController, type: :controller do
 end
 RUBY
 
+# acceptance test cases
 create_file 'spec/acceptance/display_top.feature', <<FEATURE
 Feature: Displaying top page
 
@@ -335,32 +291,63 @@ step 'I access top page' do
 end
 RUBY
 
-# routes.rb
-gsub_file 'config/routes.rb', comment_line_pattern, ''
-gsub_file 'config/routes.rb', empty_line_pattern, ''
-route "root to: 'pages#index'"
+# Remove comment and empty lines
+empty_line_pattern = /^\s*\n/
+comment_line_pattern = /^\s*#.*\n/
 
-# DB migration
-rake 'db:migrate'
+gsub_file '.gitignore', comment_line_pattern, ''
 
-# Rakefile
+gsub_file 'Gemfile', comment_line_pattern, ''
+
 gsub_file 'Rakefile', comment_line_pattern, ''
 gsub_file 'Rakefile', empty_line_pattern, ''
 
-# config.ru
 gsub_file 'config.ru', comment_line_pattern, ''
 gsub_file 'config.ru', empty_line_pattern, ''
 
-# config/environment.rb
 gsub_file 'config/environment.rb', comment_line_pattern, ''
 
-# config/secrets.yml
+gsub_file 'config/application.rb', comment_line_pattern, ''
+
+gsub_file 'config/routes.rb', comment_line_pattern, ''
+gsub_file 'config/routes.rb', empty_line_pattern, ''
+
+gsub_file 'config/database.yml', comment_line_pattern, ''
+
 gsub_file 'config/secrets.yml', comment_line_pattern, ''
 gsub_file 'config/secrets.yml', empty_line_pattern, ''
 
-# remove files
-run "rm README.rdoc"
+gsub_file 'config/environments/development.rb', comment_line_pattern, ''
+gsub_file 'config/environments/test.rb', comment_line_pattern, ''
+gsub_file 'config/environments/production.rb', comment_line_pattern, ''
 
+gsub_file 'config/initializers/assets.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/assets.rb', empty_line_pattern, ''
+
+gsub_file 'config/initializers/cookies_serializer.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/cookies_serializer.rb', empty_line_pattern, ''
+
+gsub_file 'config/initializers/filter_parameter_logging.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/filter_parameter_logging.rb', empty_line_pattern, ''
+
+gsub_file 'config/initializers/session_store.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/session_store.rb', empty_line_pattern, ''
+
+gsub_file 'config/initializers/wrap_parameters.rb', comment_line_pattern, ''
+gsub_file 'config/initializers/wrap_parameters.rb', empty_line_pattern, ''
+
+gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
+gsub_file 'spec/rails_helper.rb', comment_line_pattern, ''
+
+# remove files
+remove_file 'README.rdoc'
+remove_file 'db/seeds.rb'
+remove_file 'config/initializers/inflections.rb'
+remove_file 'config/initializers/mime_types.rb'
+remove_file 'config/initializers/backtrace_silencers.rb'
+remove_file 'app/assets/stylesheets/application.css'
+
+# git
 git :init
 git add: '.'
 git commit: "-m 'Initial commit'"
