@@ -195,6 +195,13 @@ gsub_file 'spec/spec_helper.rb', comment_line_pattern, ''
 
 gsub_file 'spec/rails_helper.rb', comment_line_pattern, ''
 
+create_file 'spec/turnip_helper.rb', <<RUBY
+require 'rails_helper'
+require 'turnip/capybara'
+
+Dir.glob("spec/steps/**/*steps.rb") { |f| load f, true }
+RUBY
+
 # Guard
 create_file 'Guardfile', %q{
 guard :rspec, cmd: "bundle exec rspec" do
@@ -276,6 +283,25 @@ insert_into_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, after: 'RS
       expect(response).to render_template('index')
     end
   end
+RUBY
+
+create_file 'spec/acceptance/display_top.feature', <<FEATURE
+Feature: Displaying top page
+
+  Scenario: display top page
+    When I access top page
+FEATURE
+
+create_file 'spec/steps/global_steps.rb', <<RUBY
+step 'it should display :content' do |content|
+  expect(page).to have_content(content)
+end
+RUBY
+
+create_file 'spec/steps/display_top_steps.rb', <<RUBY
+step 'I access top page' do
+  visit '/'
+end
 RUBY
 
 # routes.rb
