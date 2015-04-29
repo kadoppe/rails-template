@@ -217,6 +217,9 @@ AllCops:
     - 'spec/turnip_helper.rb'
   RunRailsCops: true
   DisplayCopNames: true
+
+Style/Documentation:
+  Enabled: false
 YAML
 
 # Guard
@@ -294,7 +297,10 @@ create_file 'app/views/pages/index.html.slim', <<SLIM
 p Under construction
 SLIM
 
-insert_into_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, after: 'RSpec.describe PagesController, type: :controller do'
+create_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, force: true
+require 'rails_helper'
+
+RSpec.describe PagesController, type: :controller do
   describe 'GET #index' do
     it 'responds successfully with an HTTP 200 status code' do
       get :index
@@ -307,6 +313,7 @@ insert_into_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, after: 'RS
       expect(response).to render_template('index')
     end
   end
+end
 RUBY
 
 create_file 'spec/acceptance/display_top.feature', <<FEATURE
