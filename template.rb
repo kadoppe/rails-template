@@ -261,6 +261,21 @@ create_file 'app/views/pages/index.html.slim', <<SLIM
 p Under construction
 SLIM
 
+insert_into_file 'spec/controllers/pages_controller_spec.rb', <<RUBY, after: 'RSpec.describe PagesController, type: :controller do'
+  describe 'GET #index' do
+    it 'responds successfully with an HTTP 200 status code' do
+      get :index
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+
+    it 'renders the index template' do
+      get :index
+      expect(response).to render_template('index')
+    end
+  end
+RUBY
+
 # routes.rb
 gsub_file 'config/routes.rb', comment_line_pattern, ''
 gsub_file 'config/routes.rb', empty_line_pattern, ''
