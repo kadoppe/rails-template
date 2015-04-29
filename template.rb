@@ -42,6 +42,7 @@ gem_group :development, :test do
   gem 'quiet_assets'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
+  gem 'turnip'
 end
 
 gem_group :test do
@@ -153,7 +154,7 @@ run 'bundle exec erb2slim -d app/views'
 generate 'rspec:install'
 
 create_file '.rspec', <<EOF, force: true
---color -f d
+--color -f d -r turnip
 EOF
 
 insert_into_file 'spec/spec_helper.rb', <<RUBY, before: 'RSpec.configure do |config|'
